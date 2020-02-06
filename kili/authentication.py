@@ -54,7 +54,10 @@ class KiliAuth(object):
                  api_endpoint='https://cloud.kili-technology.com/api/label/graphql'):
         self.session = requests.Session()
 
-        self.check_versions_match(api_endpoint)
+        try:
+            self.check_versions_match(api_endpoint)
+        except:
+            pass
 
         adapter = requests.adapters.HTTPAdapter(max_retries=MAX_RETRIES)
         self.session.mount('https://', adapter)
