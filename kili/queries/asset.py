@@ -241,7 +241,7 @@ def get_assets_by_external_id(client, project_id: str, external_id: str):
 def get_next_asset_from_label(client, label_asset_ids: List[str]):
     result = client.execute('''
     query {
-      getNextAssetFromLabel(labelAssetID: "%s", where: {}) {
+      getNextAssetFromLabel(labelAssetIDs: %s, where: {}) {
         id
       }
     }
