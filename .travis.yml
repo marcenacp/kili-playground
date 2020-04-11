@@ -1,0 +1,6 @@
+language: python
+services:
+  - docker
+before_install:
+  - docker pull continuumio/anaconda3
+  - docker run continuumio/anaconda3 /bin/sh -c "cd /root/marcenacp; ls -lrt"
