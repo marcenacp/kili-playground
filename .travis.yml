@@ -7,11 +7,10 @@ jobs:
       stage: Test *.ipynb in recipes
       script:
         - docker pull ${DOCKER_IMAGE}
-        - docker run ${DOCKER_IMAGE} /bin/sh -c "conda env list"
         - docker run ${DOCKER_IMAGE} /bin/sh -c "jupyter kernelspec list"
         - >
           docker run ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
-              git clone https://github.com/kili-technology/kili-playground.git && \
+              git clone --branch ${TRAVIS_BRANCH} https://github.com/kili-technology/kili-playground.git && \
               jupyter nbconvert \
                 --to notebook \
                 --ExecutePreprocessor.kernel_name=python3 \
