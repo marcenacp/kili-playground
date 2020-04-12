@@ -17,11 +17,12 @@ jobs:
       stage: Test *.ipynb in recipes
       script:
         - docker pull ${DOCKER_IMAGE}
+        - docker run ${DOCKER_IMAGE} /bin/sh -c "conda env list"
         - >
           docker run ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
               git clone https://github.com/kili-technology/kili-playground.git && \
               jupyter nbconvert --to notebook --execute /root/kili-playground/${NOTEBOOK_PATH}"
-    - <<: *test-recipes
+      # - <<: *test-recipes
       env:
         - DOCKER_IMAGE=continuumio/anaconda3
         - NOTEBOOK_PATH=recipes/image-object-detection-with-yolo/main.ipynb
