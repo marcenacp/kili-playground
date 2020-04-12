@@ -12,9 +12,9 @@ jobs:
         - >
           docker run ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
               git clone https://github.com/kili-technology/kili-playground.git && \
-              jupyter nbconvert && \
-                --to notebook && \
-                --ExecutePreprocessor.kernel_name=python3 && \
+              jupyter nbconvert \
+                --to notebook \
+                --ExecutePreprocessor.kernel_name=python3 \
                 --execute /root/kili-playground/${NOTEBOOK_PATH}"
       env:
         - DOCKER_IMAGE=continuumio/anaconda3
