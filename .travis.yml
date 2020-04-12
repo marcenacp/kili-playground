@@ -2,7 +2,8 @@ language: python
 services:
   - docker
 env:
-  - KILI_API_ENDPOINT=https://staging.cloud.kili-technology.com/api/label/graphql
+  global:
+    - KILI_API_ENDPOINT=https://staging.cloud.kili-technology.com/api/label/graphql
 jobs:
   include:
     - &test-recipes
