@@ -7,3 +7,5 @@ before_install:
   - docker run continuumio/anaconda3 /bin/sh -c "ls -lrt"
   - docker run continuumio/anaconda3 /bin/sh -c "cd /root; ls -lrt"
   - docker run continuumio/anaconda3 /bin/sh -c "cd /dev; ls -lrt"
+  - docker run continuumio/anaconda3 /bin/sh -c "cd /home; ls -lrt"
+  - docker run continuumio/anaconda3 /bin/sh -c "cd ~; ls -lrt"
