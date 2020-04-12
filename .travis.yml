@@ -1,13 +1,7 @@
 language: python
 services:
-- docker
-before_install:
-- docker pull continuumio/anaconda3
-- docker run continuumio/anaconda3 /bin/sh -c "ls -lrt"
-- docker run continuumio/anaconda3 /bin/sh -c "cd /root; ls -lrt"
-- docker run continuumio/anaconda3 /bin/sh -c "cd /dev; ls -lrt"
-- docker run continuumio/anaconda3 /bin/sh -c "cd /home; ls -lrt"
-- docker run continuumio/anaconda3 /bin/sh -c "cd ~; ls -lrt"
-env:
-  global:
-    secure: BWuP6b3NwrtCv7aPhTyn1n0Ht3hh05MHQP1SDWnHuxOYr6eZ4E7dUeOL4AdryY3dgmp28Ddfhh5/1j7m4JYpx9ECA0M/thkb8gQwF1uB1OUomaQUYTNvPp8tNHbjfVBa65PXRxToS4e2HRnxgUwXT/myGRp2Em21EKmP+VePDUCUJ4ntVWy1L1jh/RqUu+tdt9cS+ElpCyocKxwxLgo90FfuREk5sizQFPCZfNdBcDgvt89DJ/uMw0W/Sk/7L3zQUfrGo+8PdczyMlGKngAo2Y5hdKLPj1PjGhWe+5+Jf6urJDoLAk8hc1jxEvZNeUPj5MtIH17bB/C9Y48fFrQpPDm5jZiADKTLn4ve6ENBbWgCI6kiYdms8sIf8UWgYt03iOHfWdyKa7qPJuzdKb1gBjwKNgpr/UZE5zDMa0zeW7T0+zvl8PDPRbz60yUasOAwthPpQLDIFtxVwHMuv2jADpbJiRyK+gIKlKAUt0WJMU7RdoW2dVZsC5pO3Nvr7BrwzNa4ZG0O3F6+yPUYveYzi2Cr0pyr9h4Oe8K6ywISdVQKS7NOgNW1vJvZGOKDON4Hif24jLyHoTn+7aUrXcmLwpIgNZcLN/Cmec4+h3pbrX3KUvdZzz1uTfAmDx+u4FLZAwwz9h8R1n2GTrZuXeq/tEzxL7qS0aOiqWIzZVtLazQ=
+  - docker
+script:
+  - docker pull continuumio/anaconda3
+  - docker run continuumio/anaconda3 /bin/sh -c "cd /root; git clone https://github.com/kili-technology/kili-playground.git"
+  - docker run continuumio/anaconda3 /bin/sh -c "jupyter nbconvert --to notebook --execute /root/kili-playground/recipes/image-object-detection-with-yolo/main.ipynb"
