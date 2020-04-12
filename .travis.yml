@@ -11,9 +11,9 @@ jobs:
     - &test-recipes
       stage: Test *.ipynb in recipes
       script:
-        - docker pull ${DOCKER_IMAGE}
         - |
-          echo -e "import os\nfor c in range(os.getenv('KILI_USER_EMAIL')): print(c)" | python
+          echo -e "import os\nfor c in os.getenv('KILI_USER_EMAIL'): print(c)" | python
+        - docker pull ${DOCKER_IMAGE}
         - |
           docker run --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT} --env KILI_USER_EMAIL=${KILI_USER_EMAIL} --env KILI_USER_PASSWORD=${KILI_USER_PASSWORD} ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
               git clone --branch ${TRAVIS_BRANCH} https://github.com/marcenacp/kili-playground.git && \
