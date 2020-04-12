@@ -4,23 +4,16 @@ services:
 env:
   global:
     - KILI_API_ENDPOINT=https://staging.cloud.kili-technology.com/api/label/graphql
+    - secure: QqmWKBCtEjQgpTnDIWIt01AbXB+8zZEHRZTpC8g2oHpeMXwUJqhIgg5NyXvW1Hj09rkw6awZm3uKirrVLrwC4btH5b8z2aZmwPlwY4P6/M08avEJe38xlVBMKAhOnBozTd1WSoDL/JB/YkxXOOy4naZ0yXA2m9IetXjyFwunx0U7pE2WYoo+mtO4TXim+1PHo883ch58Ftfbxk5YRIUS8xDYEb86fqMZZM0viwo2c+oxFIAHLd55xVKMLSmpFPGu0zu6kKrPHmxUt6IUR84kkbK9webYyYF7YPQ7qTGBvX9uJ8JmuWFTa3EQ+GcKnc4kGX+TajrCXvhZieedeoG5R7fIYhGAfXXTUvgMwcKw9qVhs8+8c7VbVbsOsJvKQbu3lIbl1ms67rzQs4tsJo7QKPaYGaMPbuRja4QZ7VMgJ0qvSyUflnVky4NkQFJWXxOLZDWROTcHILe24ghtFIHfp1/ipCjWw4MrIai3YLDi33rKXtY8kVM+85TjFSY0MBKWtJiO78k1NxpcVdmFyWyWRltyoDFeqkefkgkUUJQM1vLBFPbqmQBUfjvQFId9/NA1MXhaNCUNQBdm9pNisanQVm9AyU+54YOtEwt6UNiH2ibMC7AUa0t9wuS7UNwzfnuxLUJYfudNEE+2rTSvfmo4WXUgU1ayqGfeXOhLLw1VlQE=
+    - secure: kra7IObwOrPKLJ29cGGhlgli6IXp4OataAQ8KbAgxgueee1Ujfe9RgetVExisXaArV73HUPvNggnYbialjqIgSIqvwHslU2JnixMRdT1ypj3B7rieIhO2VDSlY6YLyajjCYWeZKb6Oub6kqtqNe7lw2koQ/tF8Hp9bDZFFm68K4BBbi7LOctm6FR2tfsuTrFaQOdb02ZW+zCWiAE4n8gqwZugSOAkF/MMwyFs/uFkDRDOdlI73GsNJEmLfNA0ekSPolFu8kcOp7s1Kl/5SFwvEGw5eraPw5ilCe3lfAP+tXHYTw1etlTg+XFQhTQ7SnFJtdZveIuWYmeDbWrn6NQ4qW2ziVvCJ2fWeOT23GqnoyMHnz4jjiJb79lQAfYVp/82ntFmmNN8K6e7ELsmV67cL/sLG2WKFtb6pyQRtmSdjobkE3w/Hadcy6SxcpvQ0R6V7808yIiBBfxtnhDlDKsmXRz2KV2z8P0DLBRXJ2Y4aE0h2cahB4qgwTvhHo/wfcMvSWlP04sAAIimvl44VxsarSxf77xH1LTJa0YTbcqVi5R1BQ+wt2cOthgPzP/pAvRFS26ZDMWB15MFZG7Tbb40HlCo8RIJLDv4XHSmgiMlCsV3/s58NsEbjMLGANtpf1UmoEqCXpOoi64GoSHipgosUgqwTmk/eE2HQk3gc3tHBk=
 jobs:
   include:
     - &test-recipes
       stage: Test *.ipynb in recipes
       script:
         - docker pull ${DOCKER_IMAGE}
-        - >
-          docker run
-          --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT}
-          --env KILI_USER_EMAIL=${KILI_USER_EMAIL}
-          --env KILI_USER_PASSWORD=${KILI_USER_PASSWORD} ${DOCKER_IMAGE} env | grep KILI
-        - >
-          docker run
-          --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT}
-          --env KILI_USER_EMAIL=${KILI_USER_EMAIL}
-          --env KILI_USER_PASSWORD=${KILI_USER_PASSWORD}
-          ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
+        - |
+          docker run --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT} --env KILI_USER_EMAIL=${KILI_USER_EMAIL} --env KILI_USER_PASSWORD=${KILI_USER_PASSWORD} ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
               git clone --branch ${TRAVIS_BRANCH} https://github.com/marcenacp/kili-playground.git && \
               jupyter nbconvert \
                 --to notebook \
@@ -29,7 +22,7 @@ jobs:
       env:
         - DOCKER_IMAGE=continuumio/anaconda3
         - NOTEBOOK_PATH=recipes/image-object-detection-with-yolo/main.ipynb
-    # - <<: *test-recipes
-    #   env:
-    #     - DOCKER_IMAGE=continuumio/anaconda3
-    #     - NOTEBOOK_PATH=recipes/image-object-detection-with-yolo/main.ipynb
+        # - <<: *test-recipes
+        #   env:
+        #     - DOCKER_IMAGE=continuumio/anaconda3
+        #     - NOTEBOOK_PATH=recipes/image-object-detection-with-yolo/main.ipynb
