@@ -9,8 +9,7 @@ jobs:
       stage: Test *.ipynb in recipes
       script:
         - docker pull ${DOCKER_IMAGE}
-        - docker run ${DOCKER_IMAGE} /bin/sh -c "jupyter kernelspec list"
-        - docker run ${DOCKER_IMAGE} /bin/sh -c "echo -e \"import os\nprint(os.getenv('KILI_API_ENDPOINT'))\" | python"
+        - docker run --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT} ${DOCKER_IMAGE} env | grep KILI
         - >
           docker run
           --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT}
