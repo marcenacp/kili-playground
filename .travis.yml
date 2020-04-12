@@ -3,5 +3,11 @@ services:
   - docker
 script:
   - docker pull continuumio/anaconda3
-  - docker run continuumio/anaconda3 /bin/sh -c "cd /root; git clone https://github.com/kili-technology/kili-playground.git"
-  - docker run continuumio/anaconda3 /bin/sh -c "jupyter nbconvert --to notebook --execute /root/kili-playground/recipes/image-object-detection-with-yolo/main.ipynb"
+  - >
+    docker run continuumio/anaconda3 /bin/sh -c "cd /root && \
+        git clone https://github.com/kili-technology/kili-playground.git && \
+        ls -lrt /root && \
+        ls -lrt /root/kili-playground && \
+        ls -lrt /root/kili-playground/recipes && \
+        ls -lrt /root/kili-playground/recipes/image-object-detection-with-yolo && \
+        jupyter nbconvert --to notebook --execute /root/kili-playground/recipes/image-object-detection-with-yolo/main.ipynb"
