@@ -1,13 +1,27 @@
 language: python
 services:
   - docker
-script:
-  - docker pull continuumio/anaconda3
-  - >
-    docker run continuumio/anaconda3 /bin/sh -c "cd /root && \
-        git clone https://github.com/kili-technology/kili-playground.git && \
-        ls -lrt /root && \
-        ls -lrt /root/kili-playground && \
-        ls -lrt /root/kili-playground/recipes && \
-        ls -lrt /root/kili-playground/recipes/image-object-detection-with-yolo && \
-        jupyter nbconvert --to notebook --execute /root/kili-playground/recipes/image-object-detection-with-yolo/main.ipynb"
+# script:
+#   - docker pull continuumio/anaconda3
+#   - >
+#     docker run continuumio/anaconda3 /bin/sh -c "cd /root && \
+#         git clone https://github.com/kili-technology/kili-playground.git && \
+#         ls -lrt /root && \
+#         ls -lrt /root/kili-playground && \
+#         ls -lrt /root/kili-playground/recipes && \
+#         ls -lrt /root/kili-playground/recipes/image-object-detection-with-yolo && \
+#         jupyter nbconvert --to notebook --execute /root/kili-playground/recipes/image-object-detection-with-yolo/main.ipynb"
+jobs:
+  include:
+    - &test-recipes
+      stage: Test *.ipynb in recipes
+      script:
+        - docker pull ${DOCKER_IMAGE}
+        - >
+          docker run ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
+              git clone https://github.com/kili-technology/kili-playground.git && \
+              jupyter nbconvert --to notebook --execute /root/kili-playground/${NOTEBOOK_PATH}"
+    - <<: *test-recipes
+      env:
+        - DOCKER_IMAGE=continuumio/anaconda3
+        - NOTEBOOK_PATH=recipes/image-object-detection-with-yolo/main.ipynb
