@@ -9,7 +9,11 @@ jobs:
       stage: Test *.ipynb in recipes
       script:
         - docker pull ${DOCKER_IMAGE}
-        - docker run --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT} ${DOCKER_IMAGE} env | grep KILI
+        - >
+          docker run
+          --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT}
+          --env KILI_USER_EMAIL=${KILI_USER_EMAIL}
+          --env KILI_USER_PASSWORD=${KILI_USER_PASSWORD} ${DOCKER_IMAGE} env | grep KILI
         - >
           docker run
           --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT}
