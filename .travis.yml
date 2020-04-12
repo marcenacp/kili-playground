@@ -10,7 +10,7 @@ jobs:
         - docker run ${DOCKER_IMAGE} /bin/sh -c "jupyter kernelspec list"
         - >
           docker run ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
-              git clone --branch ${TRAVIS_BRANCH} https://github.com/kili-technology/kili-playground.git && \
+              git clone --branch ${TRAVIS_BRANCH} https://github.com/marcenacp/kili-playground.git && \
               jupyter nbconvert \
                 --to notebook \
                 --ExecutePreprocessor.kernel_name=python3 \
