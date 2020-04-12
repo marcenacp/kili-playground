@@ -10,6 +10,7 @@ jobs:
       script:
         - docker pull ${DOCKER_IMAGE}
         - docker run ${DOCKER_IMAGE} /bin/sh -c "jupyter kernelspec list"
+        - docker run ${DOCKER_IMAGE} /bin/sh -c "echo -e \"import os\nprint(os.getenv('KILI_API_ENDPOINT'))\" | python"
         - >
           docker run ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
               git clone --branch ${TRAVIS_BRANCH} https://github.com/marcenacp/kili-playground.git && \
