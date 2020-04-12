@@ -11,16 +11,19 @@ jobs:
     - &test-recipes
       stage: Test *.ipynb in recipes
       script:
-        - |
-          echo -e "import os\nfor c in os.getenv('KILI_USER_EMAIL'): print(c)" | python
         - docker pull ${DOCKER_IMAGE}
         - |
-          docker run --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT} --env KILI_USER_EMAIL=${KILI_USER_EMAIL} --env KILI_USER_PASSWORD=${KILI_USER_PASSWORD} ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
+          docker run
+            --env KILI_API_ENDPOINT=${KILI_API_ENDPOINT}
+            --env KILI_USER_EMAIL=${KILI_USER_EMAIL}
+            --env KILI_USER_PASSWORD=${KILI_USER_PASSWORD}
+            ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
               git clone --branch ${TRAVIS_BRANCH} https://github.com/marcenacp/kili-playground.git && \
               pip install ./kili-playground && \
               jupyter nbconvert \
                 --to notebook \
                 --ExecutePreprocessor.kernel_name=python3 \
+                --ExecutePreprocessor.timeout=180 \
                 --execute /root/kili-playground/${NOTEBOOK_PATH}"
       env:
         - DOCKER_IMAGE=continuumio/anaconda3
