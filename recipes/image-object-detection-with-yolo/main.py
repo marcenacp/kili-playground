@@ -61,7 +61,7 @@ def read_arguments():
                         help="should we override the cfg file with your custom classes ?")
     parser.add_argument('-c', "--cfg", type=str,
                         help="cfg file you would like to use")
-    parser.add_argument('-g', "--number_of_inferences", type=str,
+    parser.add_argument('-g', "--number_of_inferences", type=int,
                         help="maximal number of inferences")
     args = parser.parse_args()
     if any([
